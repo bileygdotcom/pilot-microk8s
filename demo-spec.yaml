@@ -1,0 +1,207 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: pilot-server-6d4dcbfc7-btsrw
+  generateName: pilot-server-6d4dcbfc7-
+  namespace: default
+  selfLink: /api/v1/namespaces/default/pods/pilot-server-6d4dcbfc7-btsrw
+  uid: f8e07054-df80-4c76-8038-6cfaa5d4ea6a
+  resourceVersion: '65442'
+  creationTimestamp: '2021-10-19T20:51:51Z'
+  labels:
+    app: pilot-server
+    pod-template-hash: 6d4dcbfc7
+  annotations:
+    cni.projectcalico.org/podIP: 10.1.22.7/32
+    cni.projectcalico.org/podIPs: 10.1.22.7/32
+  ownerReferences:
+    - apiVersion: apps/v1
+      kind: ReplicaSet
+      name: pilot-server-6d4dcbfc7
+      uid: d6ff16b1-7f75-4389-af33-94e0a828be12
+      controller: true
+      blockOwnerDeletion: true
+  managedFields:
+    - manager: calico
+      operation: Update
+      apiVersion: v1
+      time: '2021-10-19T20:51:51Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:metadata:
+          f:annotations:
+            .: {}
+            f:cni.projectcalico.org/podIP: {}
+            f:cni.projectcalico.org/podIPs: {}
+      subresource: status
+    - manager: kubelite
+      operation: Update
+      apiVersion: v1
+      time: '2021-10-19T20:51:51Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:metadata:
+          f:generateName: {}
+          f:labels:
+            .: {}
+            f:app: {}
+            f:pod-template-hash: {}
+          f:ownerReferences:
+            .: {}
+            k:{"uid":"d6ff16b1-7f75-4389-af33-94e0a828be12"}: {}
+        f:spec:
+          f:containers:
+            k:{"name":"pilot-server"}:
+              .: {}
+              f:image: {}
+              f:imagePullPolicy: {}
+              f:name: {}
+              f:resources: {}
+              f:terminationMessagePath: {}
+              f:terminationMessagePolicy: {}
+          f:dnsPolicy: {}
+          f:enableServiceLinks: {}
+          f:restartPolicy: {}
+          f:schedulerName: {}
+          f:securityContext: {}
+          f:terminationGracePeriodSeconds: {}
+    - manager: kubelite
+      operation: Update
+      apiVersion: v1
+      time: '2021-10-21T19:18:18Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:status:
+          f:conditions:
+            k:{"type":"ContainersReady"}:
+              .: {}
+              f:lastProbeTime: {}
+              f:lastTransitionTime: {}
+              f:status: {}
+              f:type: {}
+            k:{"type":"Initialized"}:
+              .: {}
+              f:lastProbeTime: {}
+              f:lastTransitionTime: {}
+              f:status: {}
+              f:type: {}
+            k:{"type":"Ready"}:
+              .: {}
+              f:lastProbeTime: {}
+              f:lastTransitionTime: {}
+              f:status: {}
+              f:type: {}
+          f:containerStatuses: {}
+          f:hostIP: {}
+          f:phase: {}
+          f:podIP: {}
+          f:podIPs:
+            .: {}
+            k:{"ip":"10.1.22.7"}:
+              .: {}
+              f:ip: {}
+          f:startTime: {}
+      subresource: status
+spec:
+  volumes:
+    - name: data
+      persistentVolumeClaim:
+        claimName: fileshare
+    - name: kube-api-access-nhflv
+      projected:
+        sources:
+          - serviceAccountToken:
+              expirationSeconds: 3607
+              path: token
+          - configMap:
+              name: kube-root-ca.crt
+              items:
+                - key: ca.crt
+                  path: ca.crt
+          - downwardAPI:
+              items:
+                - path: namespace
+                  fieldRef:
+                    apiVersion: v1
+                    fieldPath: metadata.namespace
+        defaultMode: 420
+  containers:
+    - name: pilot-server
+      image: bileyg/pilot-server
+      resources: {}
+      volumeMounts:
+        - name: data
+          readOnly: false
+          mountPath: /nfs-client
+        - name: kube-api-access-nhflv
+          readOnly: true
+          mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      imagePullPolicy: Always
+  restartPolicy: Always
+  terminationGracePeriodSeconds: 30
+  dnsPolicy: ClusterFirst
+  serviceAccountName: default
+  serviceAccount: default
+  nodeName: hp
+  securityContext: {}
+  schedulerName: default-scheduler
+  tolerations:
+    - key: node.kubernetes.io/not-ready
+      operator: Exists
+      effect: NoExecute
+      tolerationSeconds: 300
+    - key: node.kubernetes.io/unreachable
+      operator: Exists
+      effect: NoExecute
+      tolerationSeconds: 300
+  priority: 0
+  enableServiceLinks: true
+  preemptionPolicy: PreemptLowerPriority
+status:
+  phase: Running
+  conditions:
+    - type: Initialized
+      status: 'True'
+      lastProbeTime: null
+      lastTransitionTime: '2021-10-19T20:51:51Z'
+    - type: Ready
+      status: 'True'
+      lastProbeTime: null
+      lastTransitionTime: '2021-10-21T19:18:17Z'
+    - type: ContainersReady
+      status: 'True'
+      lastProbeTime: null
+      lastTransitionTime: '2021-10-21T19:18:17Z'
+    - type: PodScheduled
+      status: 'True'
+      lastProbeTime: null
+      lastTransitionTime: '2021-10-19T20:51:51Z'
+  hostIP: 192.168.8.103
+  podIP: 10.1.22.7
+  podIPs:
+    - ip: 10.1.22.7
+  startTime: '2021-10-19T20:51:51Z'
+  containerStatuses:
+    - name: pilot-server
+      state:
+        running:
+          startedAt: '2021-10-21T19:18:17Z'
+      lastState:
+        terminated:
+          exitCode: 255
+          reason: Unknown
+          startedAt: '2021-10-21T06:18:41Z'
+          finishedAt: '2021-10-21T19:17:45Z'
+          containerID: >-
+            containerd://2fee154e3b75fb44c0e1722237aef5271621a2d4ff80dc4d592ada1e5da503ed
+      ready: true
+      restartCount: 7
+      image: docker.io/bileyg/pilot-server:latest
+      imageID: >-
+        docker.io/bileyg/pilot-server@sha256:b2f124cfbfeb772b5369d732f4e374be18b0ce8c227286b8da6ac2d1a3a271eb
+      containerID: >-
+        containerd://6424e86b31ef879ee572ae76bd16c5d5638b28c6063a90cd76e2fc445a79afc9
+      started: true
+  qosClass: BestEffort

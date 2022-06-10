@@ -1,0 +1,2 @@
+sudo microk8s kubectl apply -f fileshare.yaml
+sudo microk8s kubectl apply -f pilot-pod.yaml

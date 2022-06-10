@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pilot-deployment
+  labels:
+    app: pilot
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      pod: pilot-pod
+  template:
+    metadata:
+      labels:
+        pod: pilot-pod
+    spec:
+      volumes:
+      - name: data
+        persistentVolumeClaim:
+          claimName: fileshare
+      containers:
+        - name: pilot-container
+          image: bileyg/pilot-server
+          ports:
+            - containerPort: 5545
+          volumeMounts:
+            - name: data
+              mountPath: /mnt/vol1
